@@ -18,7 +18,6 @@ export default function Sidebar({ children }) {
       <SheetContent className="bg-black">
         <SheetHeader className="">
           <SheetTitle className="text-white">SST</SheetTitle>
-          <SheetDescription>Still in development</SheetDescription>
         </SheetHeader>
 
         <SheetFooter>

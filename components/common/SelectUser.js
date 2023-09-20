@@ -1,9 +1,6 @@
 "use client";
 
 import {
-  batch1arr,
-  batch2arr,
-  batch3arr,
   mainBatch1arr,
   mainBatch2arr,
   mainBatch3arr,
