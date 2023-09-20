@@ -86,7 +86,6 @@ const Table = ({ table }) => {
   useEffect(() => {
     handle({ userId: searchedId });
 
-    console.log("this isshivansh singh searcjedId", searchedId);
   }, [searchedId]);
 
   console.log(columnG, "this is column g");
@@ -161,7 +160,7 @@ const Table = ({ table }) => {
       <table className="table-fixed relative">
         <thead className="relative">
           <tr className="text-center sticky-header-row  top-0">
-            <th className="  sticky left-0 bg-gray-900 text-white">Row</th>
+            <th className="  sticky  text-[12px] left-0 bg-gray-900 text-white">Row</th>
             <th className=" text-[12px] opacity-100 bg-gray-800">G</th>
             <th className=" text-[12px] opacity-100  bg-gray-900">F</th>
             <th className=" text-[12px] opacity-100 bg-gray-800">E</th>

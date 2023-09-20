@@ -3,7 +3,7 @@ import { useUser } from "@/lib/store/store";
 import Header from "@/components/common/Header";
 import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchData } from "@/lib/components/SeatingList";
 import Table from "@/components/common/Table";
 
@@ -70,7 +70,7 @@ const Home = () => {
         <span className="capitalize text-[12px]">
           Mentor :- {batch == 1 ? "Dhruv Pasricha" : ""}
           {batch == 2 ? "Diwakar Gupta" : ""}
-          {batch == 3 ? "Parthvik Ajmera" : ""}
+          {batch == 3 ? "Akansha Gaur" : ""}
         </span>
       </div>
 

@@ -1,19 +1,15 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar} from "../ui/avatar";
 import { HiMenuAlt2 } from "react-icons/hi";
-import { FiLogOut } from "react-icons/fi";
 import { useUser } from "@/lib/store/store";
 import { FiSearch } from "react-icons/fi";
 import Sidebar from "./Sidebar";
 import { SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
 import { SearchUser } from "./SearchUser";
 import { useState } from "react";
 
 const Header = ({ text }) => {
-  const logoutloadSearchBar = (e) => {
-    setOpen((open) => !open);
-  };
+ 
   const [open, setOpen] = useState(false);
 
   const logout = useUser((state) => state.logout);

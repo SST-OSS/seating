@@ -1,14 +1,6 @@
 "use client";
 
 import * as React from "react";
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User,
-} from "lucide-react";
 
 import {
   CommandDialog,
@@ -25,15 +17,12 @@ import {
   mainBatch3arr,
 } from "@/lib/components/SeatingList";
 import { useUser } from "@/lib/store/store";
-import { Button } from "../ui/button";
 
 export function SearchUser({ setOpen, open }) {
   const searchedUser = useUser((state) => state.searchedUser);
 
   const setSearchedUser = useUser((state) => state.updateSearchedUser);
-  const searchedBatch = useUser((state) => state.searchedBatch);
 
-  const setSearchedBatch = useUser((state) => state.setSearchedBatch);
   const setSearchedId = useUser((state) => state.setSearchedId);
 
   function generateUniqueIdFromString(inputString) {
