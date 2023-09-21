@@ -70,7 +70,7 @@ const Home = () => {
         <span className="capitalize text-[12px]">
           Mentor :- {batch == 1 ? "Dhruv Pasricha" : ""}
           {batch == 2 ? "Diwakar Gupta" : ""}
-          {batch == 3 ? "Akansha Gaur" : ""}
+          {batch == 3 ? "Akanksha Gaur" : ""}
         </span>
       </div>
 
