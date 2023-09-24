@@ -52,7 +52,7 @@ const Home = () => {
     <div className="bg-darkBG h-screen overflow-hidden text-gray-200 max-h-screen w-screen p-4 flex flex-col gap-4 ">
       <Header text={"Home"} />
 
-      <div className="border flex flex-col items-start  p-4 mt-[80px] border-gray-600 rounded-lg overflow-hidden w-full">
+      <div className="border lg:w-[50%] lg:min-h-[180px] flex flex-col items-start  p-4 mt-[80px] border-gray-600 rounded-lg overflow-hidden w-full">
         <div className="flex justify-between w-full">
           <Avatar className="border-[3px] h-[4rem] w-[4rem] border-blue-700">
             <AvatarImage src="img/logo.png" alt="@shadcn" />
