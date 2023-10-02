@@ -116,6 +116,14 @@ const Table = ({ table }) => {
     return uniqueId;
   }
 
+  function toTitleCase(text) {
+    return text.toLowerCase().split(' ').map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+  }
+  
+  
+
   const getCellIte = (tableList, index, color, columnName) => {
     return (
       <td className={`p-8 ${color}`}>
@@ -141,7 +149,7 @@ const Table = ({ table }) => {
                 <Avatar className="flex items-center justify-center h-[2rem] w-[2rem] border border-gray-700">
                   {getInitials(cell.name)}
                 </Avatar>
-                <span className="text-[10px]">{cell.name}</span>
+                <span className="text-[10px]">{toTitleCase(cell.name)}</span>
               </div>
             );
           })}
