@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/lib/components/SeatingList";
 import Table from "@/components/common/Table";
+import { Button } from "@/components/ui/button";
+import SelectUser from "@/components/common/SelectUser";
 
 const Home = () => {
   const [seatingArrangment, setSeatingArrangment] = useState([]);
@@ -58,7 +60,7 @@ const Home = () => {
 
       {isBatchManager ? (
         <>
-          <div className="mt-[80px] lg:min-h-[180px] border p-4 rounded-lg">
+          <div className="mt-[80px]  border p-4 rounded-lg">
             <div className="flex justify-between w-full">
               <div className="flex items-start gap-2">
                 <Avatar className="border-[3px] h-[4rem] w-[4rem] border-blue-700">
@@ -80,6 +82,13 @@ const Home = () => {
                     <span>{item}: 34/200 </span>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className="flex gap-2 flex-col mt-4">
+              <span>Mark Attendence</span>
+              <div>
+                <Button>Select Multiple</Button>
               </div>
             </div>
           </div>
@@ -109,6 +118,21 @@ const Home = () => {
       )}
 
       <Table table={seatingArrangment} />
+
+      <div className="absolute flex items-center justify-between p-2 pl-8 pr-8 gap-4 left-0 right-0 bottom-0 h-[80px] bg-blue-700">
+        <div className="flex gap-4">
+          <span className="text-xl">10 Selected</span>{" "}
+          {subject.map((item) => (
+            <div
+              key={item}
+              className="p-2 pl-4 min-w-[100px] justify-center flex items-center pr-4 bg-black  rounded"
+            >
+              <span>{item} </span>
+            </div>
+          ))}
+        </div>
+        <Button>Done</Button>
+      </div>
     </div>
   );
 };
