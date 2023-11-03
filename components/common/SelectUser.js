@@ -36,7 +36,7 @@ const SelectUser = ({ selectedUser, setSelectedUser }) => {
   };
 
   return (
-    <Command className="dark overflow-hidden  flex-1 w-full ">
+    <Command className="dark bg-gradient-to-b from-gray-700 via-gray-900 to-black overflow-hidden  flex-1 w-full ">
       <CommandInput
         placeholder="Type a name or search..."
         value={selectedUser}

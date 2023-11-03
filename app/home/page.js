@@ -15,6 +15,8 @@ const Home = () => {
   const seatedRow = useUser((state) => state.seatedRow);
   const batch = useUser((state) => state.batchNumber);
 
+  const isBatchManager = useUser((state) => state.isBatchManager);
+
   useEffect(() => {
     getSeating();
     const targetElement = document.getElementById(id);
@@ -35,6 +37,7 @@ const Home = () => {
   };
 
   const name = useUser((state) => state.name);
+  // const batchManagerName = useUser((state) => state.name);
 
   if (name == null) {
     redirect("/");
@@ -49,30 +52,49 @@ const Home = () => {
   }
 
   return (
-    <div className="bg-darkBG h-screen overflow-hidden text-gray-200 max-h-screen w-screen p-4 flex flex-col gap-4 ">
+    <div className=" bg-gradient-to-b from-gray-700 via-gray-900 to-black h-screen overflow-hidden text-gray-200 max-h-screen w-screen p-4 flex flex-col gap-4 ">
       <Header text={"Home"} />
 
-      <div className="border lg:w-[50%] lg:min-h-[180px] flex flex-col items-start  p-4 mt-[80px] border-gray-600 rounded-lg overflow-hidden w-full">
-        <div className="flex justify-between w-full">
-          <Avatar className="border-[3px] h-[4rem] w-[4rem] border-blue-700">
-            <AvatarImage src="img/logo.png" alt="@shadcn" />
-            <AvatarFallback>SST</AvatarFallback>
-          </Avatar>
-          <div className="text-3xl bg-blue-900 font-bold  p-4 rounded-lg">
-            <span>
-              {seatedCol}-{seatedRow}
-            </span>
+      {isBatchManager ? (
+        <>
+          <div className="mt-[80px] lg:min-h-[180px] border p-4 rounded-lg">
+            <div className="flex justify-between w-full">
+              <div className="flex items-start gap-2">
+                <Avatar className="border-[3px] h-[4rem] w-[4rem] border-blue-700">
+                  <AvatarImage src="img/logo.png" alt="@shadcn" />
+                  <AvatarFallback>SST</AvatarFallback>
+                </Avatar>
+                <span className="capitalize text-xl font-medium">{name}</span>
+              </div>
+              <div className="text-lg bg-blue-900 font-bold  p-2 flex items-center h-auto rounded-lg">
+                <span>Thursday</span>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
+      ) : (
+        <div className="border lg:w-[50%] lg:min-h-[180px] flex flex-col items-start  p-4 mt-[80px] border-gray-600 rounded-lg overflow-hidden w-full">
+          <div className="flex justify-between w-full">
+            <Avatar className="border-[3px] h-[4rem] w-[4rem] border-blue-700">
+              <AvatarImage src="img/logo.png" alt="@shadcn" />
+              <AvatarFallback>SST</AvatarFallback>
+            </Avatar>
+            <div className="text-3xl bg-blue-900 font-bold  p-4 rounded-lg">
+              <span>
+                {seatedCol}-{seatedRow}
+              </span>
+            </div>
+          </div>
 
-        <span className="capitalize text-xl font-medium">{name}</span>
-        <span className="capitalize">Batch :- {batch}</span>
-        <span className="capitalize text-[12px]">
-          Mentor :- {batch == 1 ? "Dhruv Pasricha" : ""}
-          {batch == 2 ? "Diwakar Gupta" : ""}
-          {batch == 3 ? "Akanksha Gaur" : ""}
-        </span>
-      </div>
+          <span className="capitalize text-xl font-medium">{name}</span>
+          <span className="capitalize">Batch :- {batch}</span>
+          <span className="capitalize text-[12px]">
+            Mentor :- {batch == 1 ? "Dhruv Pasricha" : ""}
+            {batch == 2 ? "Diwakar Gupta" : ""}
+            {batch == 3 ? "Akanksha Gaur" : ""}
+          </span>
+        </div>
+      )}
 
       <Table table={seatingArrangment} />
     </div>

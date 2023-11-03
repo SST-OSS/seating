@@ -1,5 +1,5 @@
 "use client";
-import { Avatar} from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { useUser } from "@/lib/store/store";
 import { FiSearch } from "react-icons/fi";
@@ -9,13 +9,12 @@ import { SearchUser } from "./SearchUser";
 import { useState } from "react";
 
 const Header = ({ text }) => {
- 
   const [open, setOpen] = useState(false);
 
   const logout = useUser((state) => state.logout);
   return (
     <>
-      <div className="flex w-full text-white items-center justify-between pr-8 fixed bg-darkBG">
+      <div className="flex bg-transparent w-full text-white items-center justify-between pr-8 fixed ">
         <div className="flex items-center gap-4">
           <Sidebar>
             <SheetTrigger asChild>
