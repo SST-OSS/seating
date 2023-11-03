@@ -52,7 +52,9 @@ const Table = ({ table }) => {
 
       for (let j = 0; j < table[i].length; j++) {
         const item = table[i][j];
-        switch (item.column) {
+
+        const column = item.location.split("-")[1].toUpperCase();
+        switch (column) {
           case "A":
             rowA.push(item);
             break;

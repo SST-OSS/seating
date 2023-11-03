@@ -34,6 +34,7 @@ const Home = () => {
     if (result == "Error") {
       getSeating();
     } else {
+      console.log(result, "result");
       setSeatingArrangment(result);
     }
   };
