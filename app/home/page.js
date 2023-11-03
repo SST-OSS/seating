@@ -51,6 +51,7 @@ const Home = () => {
     }
   }
 
+  const subject = ["Maths", "Java", "CLI"];
   return (
     <div className=" bg-gradient-to-b from-gray-700 via-gray-900 to-black h-screen overflow-hidden text-gray-200 max-h-screen w-screen p-4 flex flex-col gap-4 ">
       <Header text={"Home"} />
@@ -68,6 +69,17 @@ const Home = () => {
               </div>
               <div className="text-lg bg-blue-900 font-bold  p-2 flex items-center h-auto rounded-lg">
                 <span>Thursday</span>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <span className="text-[1.25rem]">Today's Class</span>
+              <div className="flex pt-2 gap-4">
+                {subject.map((item) => (
+                  <div key={item} className="p-2 pl-4 pr-4 bg-black  rounded">
+                    <span>{item}: 34/200 </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
