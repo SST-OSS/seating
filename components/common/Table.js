@@ -2,6 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { Avatar } from "../ui/avatar";
 import { useUser } from "@/lib/store/store";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Table = ({ table }) => {
   const arr = new Array(9).fill("x");
@@ -12,6 +20,10 @@ const Table = ({ table }) => {
   const updateSeat = useUser((state) => state.updateCol);
   const updateRow = useUser((state) => state.updateRow);
   const searchedId = useUser((state) => state.searchedId);
+
+  const isBatchManager = useUser((state) => state.isBatchManager);
+
+  const [selectedUser, setSelectedUser] = useState([]);
 
   const [columnA, setColumnA] = useState([]);
   const [columnB, setColumnB] = useState([]);
@@ -117,12 +129,22 @@ const Table = ({ table }) => {
   }
 
   function toTitleCase(text) {
-    return text.toLowerCase().split(' ').map(word => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    }).join(' ');
+    return text
+      .toLowerCase()
+      .split(" ")
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
   }
-  
-  
+
+  const showDialog = (id, columnName) => {
+    // if (isBatchManager) {
+    //   alert("You are not allowed to change the seat");
+    // }
+
+    setSelectedUser([...selectedUser, id]);
+  };
 
   const getCellIte = (tableList, index, color, columnName) => {
     return (
@@ -134,7 +156,13 @@ const Table = ({ table }) => {
             const cellId = generateUniqueIdFromString(cell.name + cell.batch);
 
             const borderBlue =
-              cellId == userId ? "border-green-600 border-[4px] " : "";
+              cellId == userId && isBatchManager != true
+                ? "border-green-600 border-[4px] "
+                : "";
+
+            const borderRed = selectedUser.includes(cellId)
+              ? "border-blue-600 border-[4px] "
+              : "";
 
             if (cellId == userId) {
               updateSeat(columnName);
@@ -142,15 +170,28 @@ const Table = ({ table }) => {
             }
 
             return (
-              <div
-                id={cellId}
-                className={`h-[100px] bg-gray-950 flex flex-col gap-2 text-center justify-center items-center w-[100px] ${borderBlue} border border-gray-600 rounded-lg ${opacity}`}
-              >
-                <Avatar className="flex items-center justify-center h-[2rem] w-[2rem] border border-gray-700">
-                  {getInitials(cell.name)}
-                </Avatar>
-                <span className="text-[10px]">{toTitleCase(cell.name)}</span>
-              </div>
+              <Dialog>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove your data from our servers.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+
+                <div
+                  onClick={() => showDialog(cellId, cell.batch)}
+                  id={cellId}
+                  className={`h-[100px] bg-gray-950 flex flex-col gap-2 text-center justify-center items-center w-[100px] ${borderBlue} ${borderRed} border border-gray-600 rounded-lg ${opacity}`}
+                >
+                  <Avatar className="flex items-center justify-center h-[2rem] w-[2rem] border border-gray-700">
+                    {getInitials(cell.name)}
+                  </Avatar>
+                  <span className="text-[10px]">{toTitleCase(cell.name)}</span>
+                </div>
+              </Dialog>
             );
           })}
         </div>
