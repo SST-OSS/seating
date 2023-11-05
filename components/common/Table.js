@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { set } from "mongoose";
 
 const Table = ({ table }) => {
   const arr = new Array(9).fill("x");
@@ -23,8 +24,6 @@ const Table = ({ table }) => {
 
   const isBatchManager = useUser((state) => state.isBatchManager);
 
-  const [selectedUser, setSelectedUser] = useState([]);
-
   const [columnA, setColumnA] = useState([]);
   const [columnB, setColumnB] = useState([]);
   const [columnC, setColumnC] = useState([]);
@@ -33,63 +32,111 @@ const Table = ({ table }) => {
   const [columnF, setColumnF] = useState([]);
   const [columnG, setColumnG] = useState([]);
 
+  const [selectedUser, setSelectedUser] = useState([]);
+
+  const generateSeat = (row, col, sectionName) => {
+    const rows = row;
+    const columns = col;
+    const twoDArray = new Array(rows);
+    for (let i = 0; i < rows; i++) {
+      twoDArray[i] = new Array(columns);
+    }
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        twoDArray[i][j] = {
+          name: "Blank",
+          location: "A-" + (i + 1) + "-" + (j + 1),
+          id: "A-" + (i + 1) + "-" + (j + 1),
+          email: "Blank",
+          available: true,
+        };
+      }
+    }
+
+    for (let i = 0; i < rows; i++) {
+      console.log(twoDArray, "this is two d array ", sectionName);
+    }
+
+    switch (sectionName) {
+      case "A":
+        setColumnA(twoDArray);
+        break;
+      case "B":
+        setColumnB(twoDArray);
+        break;
+      case "C":
+        setColumnC(twoDArray);
+        break;
+      case "D":
+        setColumnD(twoDArray);
+        break;
+      case "E":
+        setColumnE(twoDArray);
+        break;
+      case "F":
+        setColumnF(twoDArray);
+        break;
+      case "G":
+        setColumnG(twoDArray);
+        break;
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
-    setColumnA([]);
-    setColumnB([]);
-    setColumnC([]);
-    setColumnD([]);
-    setColumnE([]);
-    setColumnF([]);
-    setColumnG([]);
+    const sectionA = [...columnA];
+    const sectionB = [...columnB];
+    const sectionC = [...columnC];
+    const sectionD = [...columnD];
+    const sectionE = [...columnE];
+    const sectionF = [...columnF];
+    const sectionG = [...columnG];
+
     for (let i = 0; i < table.length; i++) {
-      const rowA = [];
-      const rowB = [];
-      const rowC = [];
-      const rowD = [];
-      const rowE = [];
-      const rowF = [];
-      const rowG = [];
-
       for (let j = 0; j < table[i].length; j++) {
-        const item = table[i][j];
+        const user = table[i][j];
+        const column = user.location.split("-")[0];
+        const row = user.location.split("-")[1];
+        const col = user.location.split("-")[2];
+        // console.log(col, row, "this is column", column);
 
-        const column = item.location.split("-")[1].toUpperCase();
         switch (column) {
           case "A":
-            rowA.push(item);
+            sectionA[row][col] = user;
             break;
           case "B":
-            rowB.push(item);
+            sectionB[row][col] = user;
             break;
           case "C":
-            rowC.push(item);
+            sectionC[row][col] = user;
             break;
           case "D":
-            rowD.push(item);
+            sectionD[row][col] = user;
             break;
           case "E":
-            rowE.push(item);
+            sectionE[row][col] = user;
             break;
           case "F":
-            rowF.push(item);
+            sectionF[row][col] = user;
             break;
           case "G":
-            rowG.push(item);
+            sectionG[row][col] = user;
             break;
           default:
             break;
         }
+
+        setColumnA(sectionA);
+        setColumnB(sectionB);
+        setColumnC(sectionC);
+        setColumnD(sectionD);
+        setColumnE(sectionE);
+        setColumnF(sectionF);
+        setColumnG(sectionG);
+        setLoading(false);
       }
-
-      setColumnA((prevColumnA) => [...prevColumnA, rowA]);
-      setColumnB((prevColumnB) => [...prevColumnB, rowB]);
-      setColumnC((prevColumnC) => [...prevColumnC, rowC]);
-      setColumnD((prevColumnD) => [...prevColumnD, rowD]);
-      setColumnE((prevColumnE) => [...prevColumnE, rowE]);
-      setColumnF((prevColumnF) => [...prevColumnF, rowF]);
-      setColumnG((prevColumnG) => [...prevColumnG, rowG]);
-
-      setLoading(false);
     }
   }, [table]);
 
@@ -101,7 +148,17 @@ const Table = ({ table }) => {
     handle({ userId: searchedId });
   }, [searchedId]);
 
-  console.log(columnG, "this is column g");
+  useEffect(() => {
+    generateSeat(9, 4, "A");
+    generateSeat(9, 3, "B");
+    generateSeat(9, 3, "C");
+    generateSeat(9, 3, "D");
+    generateSeat(9, 3, "E");
+    generateSeat(9, 4, "F");
+    generateSeat(9, 3, "G");
+  }, []);
+
+  console.log(columnA, "this is column g");
   function getInitials(name) {
     const words = name.split(" ");
 
@@ -230,6 +287,7 @@ const Table = ({ table }) => {
                   {index + 1}
                 </td>
                 {getCellIte(columnG, index, "bg-gray-900", "G")}
+                {/* {console.log(columnC, "this is final oclumen a")} */}
                 {getCellIte(columnF, index, "bg-gray-800", "F")}
                 {getCellIte(columnE, index, "bg-gray-900", "E")}
                 {getCellIte(columnD, index, "bg-gray-800", "D")}
