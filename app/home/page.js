@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { fetchData } from "@/lib/components/SeatingList";
 import Table from "@/components/common/Table";
 import { Button } from "@/components/ui/button";
-import SelectUser from "@/components/common/SelectUser";
 
 const Home = () => {
   const [seatingArrangment, setSeatingArrangment] = useState([]);
