@@ -162,7 +162,7 @@ const Table = ({ table }) => {
   function getInitials(name) {
     const words = name.split(" ");
 
-    console.log(words, "this is words");
+    // console.log(words, "this is words");
 
     let initials = "";
 
