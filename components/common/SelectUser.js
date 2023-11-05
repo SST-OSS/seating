@@ -5,9 +5,6 @@ import {
   batch2arr,
   batch3arr,
   batch4arr,
-  mainBatch1arr,
-  mainBatch2arr,
-  mainBatch3arr,
 } from "@/lib/components/SeatingList";
 import {
   Command,
@@ -96,7 +93,7 @@ const SelectUser = ({ selectedUser, setSelectedUser }) => {
           {batch3arr.map((item, index) => (
             <CommandItem
               onSelect={(currentValue) => {
-                const my = mainBatch3arr.filter((item) =>
+                const my = batch3arr.filter((item) =>
                   item.name.toLowerCase().includes(currentValue.toLowerCase())
                 );
 

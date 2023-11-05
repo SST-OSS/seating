@@ -5,7 +5,7 @@ import { useUser } from "@/lib/store/store";
 import { FiSearch } from "react-icons/fi";
 import Sidebar from "./Sidebar";
 import { SheetTrigger } from "../ui/sheet";
-import { SearchUser } from "./SearchUser";
+// import { SearchUser } from "./SearchUser";
 import { useState } from "react";
 
 const Header = ({ text }) => {
@@ -37,7 +37,7 @@ const Header = ({ text }) => {
         </div>
       </div>
 
-      <SearchUser setOpen={setOpen} open={open} />
+      {/* <SearchUser setOpen={setOpen} open={open} /> */}
     </>
   );
 };

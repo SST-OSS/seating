@@ -8,9 +8,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { set } from "mongoose";
 
 const Table = ({ table }) => {
   const arr = new Array(9).fill("x");
