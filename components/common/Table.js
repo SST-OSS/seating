@@ -2,6 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { Avatar } from "../ui/avatar";
 import { useUser } from "@/lib/store/store";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { set } from "mongoose";
 
 const Table = ({ table }) => {
   const arr = new Array(9).fill("x");
@@ -13,6 +22,8 @@ const Table = ({ table }) => {
   const updateRow = useUser((state) => state.updateRow);
   const searchedId = useUser((state) => state.searchedId);
 
+  const isBatchManager = useUser((state) => state.isBatchManager);
+
   const [columnA, setColumnA] = useState([]);
   const [columnB, setColumnB] = useState([]);
   const [columnC, setColumnC] = useState([]);
@@ -21,61 +32,111 @@ const Table = ({ table }) => {
   const [columnF, setColumnF] = useState([]);
   const [columnG, setColumnG] = useState([]);
 
-  useEffect(() => {
-    setColumnA([]);
-    setColumnB([]);
-    setColumnC([]);
-    setColumnD([]);
-    setColumnE([]);
-    setColumnF([]);
-    setColumnG([]);
-    for (let i = 0; i < table.length; i++) {
-      const rowA = [];
-      const rowB = [];
-      const rowC = [];
-      const rowD = [];
-      const rowE = [];
-      const rowF = [];
-      const rowG = [];
+  const [selectedUser, setSelectedUser] = useState([]);
 
+  const generateSeat = (row, col, sectionName) => {
+    const rows = row;
+    const columns = col;
+    const twoDArray = new Array(rows);
+    for (let i = 0; i < rows; i++) {
+      twoDArray[i] = new Array(columns);
+    }
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        twoDArray[i][j] = {
+          name: "Blank",
+          location: "A-" + (i + 1) + "-" + (j + 1),
+          id: "A-" + (i + 1) + "-" + (j + 1),
+          email: "Blank",
+          available: true,
+        };
+      }
+    }
+
+    for (let i = 0; i < rows; i++) {
+      console.log(twoDArray, "this is two d array ", sectionName);
+    }
+
+    switch (sectionName) {
+      case "A":
+        setColumnA(twoDArray);
+        break;
+      case "B":
+        setColumnB(twoDArray);
+        break;
+      case "C":
+        setColumnC(twoDArray);
+        break;
+      case "D":
+        setColumnD(twoDArray);
+        break;
+      case "E":
+        setColumnE(twoDArray);
+        break;
+      case "F":
+        setColumnF(twoDArray);
+        break;
+      case "G":
+        setColumnG(twoDArray);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    const sectionA = [...columnA];
+    const sectionB = [...columnB];
+    const sectionC = [...columnC];
+    const sectionD = [...columnD];
+    const sectionE = [...columnE];
+    const sectionF = [...columnF];
+    const sectionG = [...columnG];
+
+    for (let i = 0; i < table.length; i++) {
       for (let j = 0; j < table[i].length; j++) {
-        const item = table[i][j];
-        switch (item.column) {
+        const user = table[i][j];
+        const column = user.location.split("-")[0];
+        const row = user.location.split("-")[1];
+        const col = user.location.split("-")[2];
+        // console.log(col, row, "this is column", column);
+
+        switch (column) {
           case "A":
-            rowA.push(item);
+            sectionA[row][col] = user;
             break;
           case "B":
-            rowB.push(item);
+            sectionB[row][col] = user;
             break;
           case "C":
-            rowC.push(item);
+            sectionC[row][col] = user;
             break;
           case "D":
-            rowD.push(item);
+            sectionD[row][col] = user;
             break;
           case "E":
-            rowE.push(item);
+            sectionE[row][col] = user;
             break;
           case "F":
-            rowF.push(item);
+            sectionF[row][col] = user;
             break;
           case "G":
-            rowG.push(item);
+            sectionG[row][col] = user;
             break;
           default:
             break;
         }
+
+        setColumnA(sectionA);
+        setColumnB(sectionB);
+        setColumnC(sectionC);
+        setColumnD(sectionD);
+        setColumnE(sectionE);
+        setColumnF(sectionF);
+        setColumnG(sectionG);
+        setLoading(false);
       }
-
-      setColumnA((prevColumnA) => [...prevColumnA, rowA]);
-      setColumnB((prevColumnB) => [...prevColumnB, rowB]);
-      setColumnC((prevColumnC) => [...prevColumnC, rowC]);
-      setColumnD((prevColumnD) => [...prevColumnD, rowD]);
-      setColumnE((prevColumnE) => [...prevColumnE, rowE]);
-      setColumnF((prevColumnF) => [...prevColumnF, rowF]);
-      setColumnG((prevColumnG) => [...prevColumnG, rowG]);
-
-      setLoading(false);
     }
   }, [table]);
 
@@ -87,14 +148,31 @@ const Table = ({ table }) => {
     handle({ userId: searchedId });
   }, [searchedId]);
 
-  console.log(columnG, "this is column g");
+  useEffect(() => {
+    generateSeat(9, 4, "A");
+    generateSeat(9, 3, "B");
+    generateSeat(9, 3, "C");
+    generateSeat(9, 3, "D");
+    generateSeat(9, 3, "E");
+    generateSeat(9, 4, "F");
+    generateSeat(9, 3, "G");
+  }, []);
+
+  console.log(columnA, "this is column g");
   function getInitials(name) {
     const words = name.split(" ");
 
+    console.log(words, "this is words");
+
     let initials = "";
 
+    let count = 0;
+
     for (let i = 0; i < words.length; i++) {
-      initials += words[i][0];
+      if (words[i][0] != undefined && count < 2) {
+        initials += words[i][0];
+        count++;
+      }
     }
 
     initials = initials.toUpperCase();
@@ -117,12 +195,22 @@ const Table = ({ table }) => {
   }
 
   function toTitleCase(text) {
-    return text.toLowerCase().split(' ').map(word => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    }).join(' ');
+    return text
+      .toLowerCase()
+      .split(" ")
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
   }
-  
-  
+
+  const showDialog = (id, columnName) => {
+    // if (isBatchManager) {
+    //   alert("You are not allowed to change the seat");
+    // }
+
+    setSelectedUser([...selectedUser, id]);
+  };
 
   const getCellIte = (tableList, index, color, columnName) => {
     return (
@@ -131,10 +219,18 @@ const Table = ({ table }) => {
           {tableList[index].map((cell) => {
             const opacity =
               cell && cell.name === "Blank" ? "opacity-20" : "opacity-100";
-            const cellId = generateUniqueIdFromString(cell.name + cell.batch);
+            const cellId = generateUniqueIdFromString(
+              cell.name + cell.batchNumber
+            );
 
             const borderBlue =
-              cellId == userId ? "border-green-600 border-[4px] " : "";
+              cellId == userId && isBatchManager != true
+                ? "border-green-600 border-[4px] "
+                : "";
+
+            const borderRed = selectedUser.includes(cellId)
+              ? "border-blue-600 border-[4px] "
+              : "";
 
             if (cellId == userId) {
               updateSeat(columnName);
@@ -142,15 +238,28 @@ const Table = ({ table }) => {
             }
 
             return (
-              <div
-                id={cellId}
-                className={`h-[100px] bg-gray-950 flex flex-col gap-2 text-center justify-center items-center w-[100px] ${borderBlue} border border-gray-600 rounded-lg ${opacity}`}
-              >
-                <Avatar className="flex items-center justify-center h-[2rem] w-[2rem] border border-gray-700">
-                  {getInitials(cell.name)}
-                </Avatar>
-                <span className="text-[10px]">{toTitleCase(cell.name)}</span>
-              </div>
+              <Dialog>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove your data from our servers.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+
+                <div
+                  onClick={() => showDialog(cellId, cell.batchNumber)}
+                  id={cellId}
+                  className={`h-[100px] bg-gray-950 flex flex-col gap-2 text-center justify-center items-center w-[100px] ${borderBlue} ${borderRed} border border-gray-600 rounded-lg ${opacity}`}
+                >
+                  <Avatar className="flex items-center justify-center h-[2rem] w-[2rem] border border-gray-700">
+                    {getInitials(cell.name)}
+                  </Avatar>
+                  <span className="text-[10px]">{toTitleCase(cell.name)}</span>
+                </div>
+              </Dialog>
             );
           })}
         </div>
@@ -187,6 +296,7 @@ const Table = ({ table }) => {
                   {index + 1}
                 </td>
                 {getCellIte(columnG, index, "bg-gray-900", "G")}
+                {/* {console.log(columnC, "this is final oclumen a")} */}
                 {getCellIte(columnF, index, "bg-gray-800", "F")}
                 {getCellIte(columnE, index, "bg-gray-900", "E")}
                 {getCellIte(columnD, index, "bg-gray-800", "D")}

@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  batch1arr,
+  batch2arr,
+  batch3arr,
+  batch4arr,
   mainBatch1arr,
   mainBatch2arr,
   mainBatch3arr,
@@ -36,7 +40,7 @@ const SelectUser = ({ selectedUser, setSelectedUser }) => {
   };
 
   return (
-    <Command className="dark overflow-hidden  flex-1 w-full ">
+    <Command className="dark bg-gradient-to-b from-gray-700 via-gray-900 to-black overflow-hidden  flex-1 w-full ">
       <CommandInput
         placeholder="Type a name or search..."
         value={selectedUser}
@@ -47,61 +51,78 @@ const SelectUser = ({ selectedUser, setSelectedUser }) => {
       <CommandList className="h-full ">
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Batch 1">
-          {mainBatch1arr.map((item, index) => (
+          {batch1arr.map((item, index) => (
             <CommandItem
               onClick={() => {
                 console.log(currentValue, "this is ussdsder");
               }}
               onSelect={(currentValue) => {
-                const my = mainBatch1arr.filter((item) =>
-                  item.toLowerCase().includes(currentValue.toLowerCase())
+                const my = batch1arr.filter((item) =>
+                  item.name.toLowerCase().includes(currentValue.toLowerCase())
                 );
 
                 console.log(my[0]);
 
-                handleClick(my[0], 1);
+                handleClick(my[0].name, 1);
               }}
               key={index}
             >
-              {item}
+              {item.name}
             </CommandItem>
           ))}
         </CommandGroup>
         <CommandSeparator />
 
         <CommandGroup heading="Batch 2">
-          {mainBatch2arr.map((item, index) => (
+          {batch2arr.map((item, index) => (
             <CommandItem
               onSelect={(currentValue) => {
-                const my = mainBatch2arr.filter((item) =>
-                  item.toLowerCase().includes(currentValue.toLowerCase())
+                const my = batch2arr.filter((item) =>
+                  item.name.toLowerCase().includes(currentValue.toLowerCase())
                 );
 
-                console.log(my[0]);
+                console.log(my[0].name);
 
-                handleClick(my[0], 2);
+                handleClick(my[0].name, 2);
               }}
               key={index}
             >
-              {item}
+              {item.name}
             </CommandItem>
           ))}
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Batch 3">
-          {mainBatch3arr.map((item, index) => (
+          {batch3arr.map((item, index) => (
             <CommandItem
               onSelect={(currentValue) => {
                 const my = mainBatch3arr.filter((item) =>
-                  item.toLowerCase().includes(currentValue.toLowerCase())
+                  item.name.toLowerCase().includes(currentValue.toLowerCase())
                 );
 
                 console.log(my[0]);
-                handleClick(my[0], 3);
+                handleClick(my[0].name, 3);
               }}
               key={index}
             >
-              {item}
+              {item.name}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        <CommandGroup heading="Batch 4">
+          {batch4arr.map((item, index) => (
+            <CommandItem
+              onSelect={(currentValue) => {
+                const my = batch4arr.filter((item) =>
+                  item.name.toLowerCase().includes(currentValue.toLowerCase())
+                );
+
+                console.log(my[0]);
+                handleClick(my[0].name, 4);
+              }}
+              key={index}
+            >
+              {item.name}
             </CommandItem>
           ))}
         </CommandGroup>

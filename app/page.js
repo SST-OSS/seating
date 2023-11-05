@@ -17,7 +17,7 @@ const Home = () => {
   }
 
   return (
-    <div className="bg-darkBG relative h-screen lg:h-max p-4 flex flex-col gap-4 ">
+    <div className="bg-gradient-to-b from-gray-700 via-gray-900 to-black relative h-screen lg:h-max p-4 flex flex-col gap-4 ">
       <Avatar className="border-[3px] h-[5rem] w-[5rem] border-blue-700">
         <AvatarImage src="img/logo.png" alt="@shadcn" />
         <AvatarFallback>SST</AvatarFallback>
