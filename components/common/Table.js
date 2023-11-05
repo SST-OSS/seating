@@ -162,10 +162,17 @@ const Table = ({ table }) => {
   function getInitials(name) {
     const words = name.split(" ");
 
+    console.log(words, "this is words");
+
     let initials = "";
 
+    let count = 0;
+
     for (let i = 0; i < words.length; i++) {
-      initials += words[i][0];
+      if (words[i][0] != undefined && count < 2) {
+        initials += words[i][0];
+        count++;
+      }
     }
 
     initials = initials.toUpperCase();
@@ -212,7 +219,9 @@ const Table = ({ table }) => {
           {tableList[index].map((cell) => {
             const opacity =
               cell && cell.name === "Blank" ? "opacity-20" : "opacity-100";
-            const cellId = generateUniqueIdFromString(cell.name + cell.batch);
+            const cellId = generateUniqueIdFromString(
+              cell.name + cell.batchNumber
+            );
 
             const borderBlue =
               cellId == userId && isBatchManager != true
@@ -241,7 +250,7 @@ const Table = ({ table }) => {
                 </DialogContent>
 
                 <div
-                  onClick={() => showDialog(cellId, cell.batch)}
+                  onClick={() => showDialog(cellId, cell.batchNumber)}
                   id={cellId}
                   className={`h-[100px] bg-gray-950 flex flex-col gap-2 text-center justify-center items-center w-[100px] ${borderBlue} ${borderRed} border border-gray-600 rounded-lg ${opacity}`}
                 >
