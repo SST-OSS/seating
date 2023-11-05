@@ -114,6 +114,7 @@ const Home = () => {
             Mentor :- {batch == 1 ? "Dhruv Pasricha" : ""}
             {batch == 2 ? "Diwakar Gupta" : ""}
             {batch == 3 ? "Akanksha Gaur" : ""}
+            {batch == 4 ? "Purna Chandra" : ""}
           </span>
         </div>
       )}
