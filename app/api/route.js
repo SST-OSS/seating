@@ -17,10 +17,14 @@ export async function GET(request) {
 
   var finalLocation = false;
 
-  while (seatingPlan === "Error") {
-    console.log("Calling Create Seating Arrangement Pattern");
-    seatingPlan = await fetchData();
-  }
+  console.log(seatingPlan, "0123");
+
+  //   if (seatingPlan == "Error") {
+  //     console.log("Calling Create Seating Arrangement Pattern");
+  //     seatingPlan = await fetchData();
+  //   }
+
+  seatingPlan = await fetchData();
 
   for (let i = 0; i < seatingPlan.length; i++) {
     for (let j = 0; j < seatingPlan[i].length; j++) {
