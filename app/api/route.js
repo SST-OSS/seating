@@ -29,11 +29,14 @@ export async function GET(request) {
   for (let i = 0; i < seatingPlan.length; i++) {
     for (let j = 0; j < seatingPlan[i].length; j++) {
       const item = seatingPlan[i][j];
+      const column = item.location.split("-")[0];
+      const row = item.location.split("-")[1];
+      const col = item.location.split("-")[2];
       if (item.email == email) {
         finalLocation = true;
         return Response.json({
           name: item.name,
-          seat: item.location,
+          seat: `${column}-${row}-${col + 1}`,
         });
       }
     }
