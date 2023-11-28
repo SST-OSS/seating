@@ -36,7 +36,7 @@ export async function GET(request) {
         finalLocation = true;
         return Response.json({
           name: item.name,
-          seat: `${column}-${row}-${col + 1}`,
+          seat: `${column}-${row}-${col}`,
         });
       }
     }
