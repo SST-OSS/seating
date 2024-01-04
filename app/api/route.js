@@ -30,8 +30,8 @@ export async function GET(request) {
     for (let j = 0; j < seatingPlan[i].length; j++) {
       const item = seatingPlan[i][j];
       const column = item.location.split("-")[0];
-      const row = item.location.split("-")[1];
-      const col = item.location.split("-")[2];
+      const row = parseInt(item.location.split("-")[1]);
+      const col = parseInt(item.location.split("-")[2]);
       if (item.email == email) {
         finalLocation = true;
         return Response.json({
